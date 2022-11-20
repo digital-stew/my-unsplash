@@ -1,9 +1,6 @@
 "use client";
 import "./global.css";
 import Link from "next/link";
-import { useState } from "react";
-import search from "../components/search.svg";
-// import styles from "./layout.module.css";
 import Header from "./header";
 export default function RootLayout({
   children,

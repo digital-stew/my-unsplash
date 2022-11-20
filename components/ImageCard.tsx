@@ -10,7 +10,6 @@ function ImageCard({ uuid, label }: Partial<dbImageType>) {
         <img
           className={styles.image}
           src={"/uploaded/" + uuid}
-          // src="https://source.unsplash.com/random?nature,cars"
           alt="drop image"
           sizes="200px"
         />

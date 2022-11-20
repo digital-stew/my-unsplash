@@ -1,11 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ImageUpload from "../components/ImageUpload";
-import Image from "next/image";
 import { dbImageType } from "../pages/api/images";
 import styles from "./page.module.css";
 import ImageCard from "../components/ImageCard";
-import { images } from "../components/images/dummyImages";
 function Page() {
   const [images, setImages] = useState<dbImageType[]>([]);
 
@@ -36,25 +33,3 @@ function Page() {
 }
 
 export default Page;
-// return (
-//   <div className={styles.imageGrid}>
-//     {images.length > 0 &&
-//       images.map((image, index) => {
-//         console.log(image);
-//         return (
-//           <div key={index} className={styles.imageWrap}>
-//             <img
-//               className={styles.image}
-//               // src={"/uploaded/" + image.uuid}
-//               src={image.src}
-//               alt="drop image"
-//               // sizes="200px"
-//               // fill
-//             />
-//             <p>some inforitive text</p>
-//           </div>
-//           // <div>yo</div>
-//         );
-//       })}
-//   </div>
-// );
