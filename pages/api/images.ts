@@ -4,6 +4,9 @@ import fs from "fs";
 import { db } from "../../components/sqlite";
 import { v4 as uuid } from "uuid";
 import path from "path";
+// const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
+const saltRounds = 10;
 
 export interface dbImageType {
   readonly id: number;
@@ -12,6 +15,10 @@ export interface dbImageType {
   readonly label: string;
   readonly password: string;
 }
+export interface UploadForm {
+  password: string;
+  label: string;
+}
 async function POST(req: NextApiRequest, res: NextApiResponse) {
   const delay = await new Promise((resolve) =>
     setTimeout(() => resolve("some value"), 10000)
@@ -19,6 +26,7 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
 
   const form = new formidable.IncomingForm();
   form.parse(req, async (_err: Error, fields: any, files: any) => {
+    const { password, label }: UploadForm = fields;
     const fileType: string = files.image.originalFilename
       .split(".")
       .pop()
@@ -35,15 +43,18 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const randomId = await saveFile(files.image, fileType);
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+      // Store hash in your password DB.
 
-    db.run(
-      "INSERT INTO images (fileName, uuid) VALUES (?,?)",
-      [files.image.originalFilename, randomId],
-      async (err) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.status(200).json(randomId);
-      }
-    );
+      db.run(
+        "INSERT INTO images (fileName, uuid, label, password) VALUES (?,?,?,?)",
+        [files.image.originalFilename, randomId, label, hash],
+        async (err) => {
+          if (err) return res.status(500).json({ error: err.message });
+          res.status(200).json(randomId);
+        }
+      );
+    });
   });
 }
 async function saveFile(file: formidable.File, fileType: string) {
