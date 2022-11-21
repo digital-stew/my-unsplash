@@ -20,9 +20,9 @@ export interface UploadForm {
   label: string;
 }
 async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const delay = await new Promise((resolve) =>
-    setTimeout(() => resolve("some value"), 10000)
-  );
+  // const delay = await new Promise((resolve) =>
+  //   setTimeout(() => resolve("some value"), 10000)
+  // );
 
   const form = new formidable.IncomingForm();
   form.parse(req, async (_err: Error, fields: any, files: any) => {
@@ -92,5 +92,14 @@ export default function image(req: NextApiRequest, res: NextApiResponse) {
     : res.status(404).send("");
 }
 
-function PATCH(_req: NextApiRequest, _res: NextApiResponse) {}
+function PATCH(req: NextApiRequest, res: NextApiResponse) {
+  // console.log(req.body);
+  const form = new formidable.IncomingForm();
+  form.parse(req, async (_err: Error, fields: any, files: any) => {
+    db.all("SELECT * from images", (err: Error, rows: dbImageType[]) => {
+      if (err) console.error(err);
+      res.status(200).json(rows);
+    });
+  });
+}
 function DELETE(_req: NextApiRequest, _res: NextApiResponse) {}

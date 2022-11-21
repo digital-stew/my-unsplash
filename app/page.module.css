@@ -2,14 +2,16 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(100px, 500px);
+  grid-auto-rows: minmax(100px, 300px);
   gap: 20px;
-  grid-auto-flow: dense;
+  grid-auto-flow: row dense;
   margin: 5rem;
+  width: 100%;
+  /* margin: 0 auto; */
 }
 
 .imageWrap:nth-child(4n) {
-  grid-column: span 2;
+  /* grid-column: span 2; */
 }
 .imageWrap:nth-child(3n + 2) {
   grid-row: span 2;

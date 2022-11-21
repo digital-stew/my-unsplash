@@ -1,25 +1,35 @@
-import React from "react";
-import styles from "../styles/deleteCard.modal.module.css";
-// import styles from "../styles/uploadPhoto.modal.module.css";
+"use client";
+import React, { useState } from "react";
+import styles from "../styles/modal.module.css";
 
-function DeletePhoto({ setShowModal }) {
-  return (
-    <div className={styles.modalOuter}>
-      <div className={styles.modal}>
-        <form action="">
-          <h3>Are you sure?</h3>
-          <label>
-            password
-            <input type="password" />
-            <div className={styles.buttonsWrap}>
-              <button>submit</button>
-              <button>submit</button>
-            </div>
-          </label>
-        </form>
+function DeletePhoto({ id }) {
+  const [showModal, setShowModal] = useState(false);
+  if (!showModal)
+    return (
+      <button style={{ zIndex: "100" }} onClick={() => setShowModal(true)}>
+        delete
+      </button>
+    );
+  if (showModal)
+    return (
+      <div className={styles.modalOuter} onClick={() => setShowModal(false)}>
+        <div className={styles.modal}>
+          <form action="">
+            <h3>Are you sure?</h3>
+            <label>
+              password
+              <input type="password" />
+              <div className={styles.buttonsWrap}>
+                <button type="reset" onClick={() => setShowModal(false)}>
+                  cancel
+                </button>
+                <button type="submit">submit</button>
+              </div>
+            </label>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
 }
 
 export default DeletePhoto;

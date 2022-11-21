@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "../styles/imageCard.module.css";
@@ -11,12 +10,11 @@ function ImageCard({
   id,
   password,
 }: Partial<dbImageType>) {
-  const [showModal, setShowModal] = useState(false);
+  let showModal = false;
   function deleteCard() {}
   return (
     <>
       <div className={styles.imageWrap}>
-        <button onClick={() => setShowModal(true)}>Delete</button>
         <img
           className={styles.image}
           src={"/uploaded/" + uuid}
@@ -24,8 +22,8 @@ function ImageCard({
           sizes="200px"
         />
         <p>{label}</p>
+        {<DeletePhoto id={id} />}
       </div>
-      {showModal && <DeletePhoto setShowModal={setShowModal} />}
     </>
   );
 }

@@ -22,11 +22,13 @@
 }
 .modalOuter {
   position: absolute;
-  top: 0;
-  width: 100vw;
+  top: -10000px;
+  left: -1000px;
+
+  width: 1000vw;
   height: 10000vh;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 99;
+  /* z-index: 99; */
 }
 .modal label:nth-child(2) {
   margin-bottom: 3rem;

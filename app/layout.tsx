@@ -1,8 +1,8 @@
-"use client";
 import "./global.css";
 import Link from "next/link";
 import Header from "./header";
-export default function RootLayout({
+import { dbImageType } from "../pages/api/images";
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;

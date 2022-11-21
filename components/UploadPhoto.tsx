@@ -1,4 +1,6 @@
-import styles from "../styles/uploadPhoto.modal.module.css";
+"use client";
+// import styles from "../styles/uploadPhoto.modal.module.css";
+import styles from "../styles/modal.module.css";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 
@@ -135,7 +137,7 @@ function UploadPhoto({ setModalOpen }) {
 
   if (step === 1 && !loading)
     return (
-      <div className={styles.modalOuter}>
+      <div className={styles.modalOuter} onClick={() => setModalOpen(false)}>
         <div
           className={styles.modal}
           onDrop={(e) => {
@@ -184,13 +186,18 @@ function UploadPhoto({ setModalOpen }) {
             <div className={styles.buttonsWrap}>
               <span>
                 <button
+                  type="button"
                   onClick={() => document.getElementById("fileInput").click()}
                 >
                   Choose file
                 </button>
                 or drop here
               </span>
-              <button type="reset" onClick={() => setModalOpen(false)}>
+              <button
+                style={{ marginLeft: "auto" }}
+                type="reset"
+                onClick={() => setModalOpen(false)}
+              >
                 Cancel
               </button>
               <button type="submit">Submit</button>
