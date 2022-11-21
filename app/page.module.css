@@ -11,7 +11,7 @@
 }
 
 .imageWrap:nth-child(4n) {
-  /* grid-column: span 2; */
+  grid-column: span 2;
 }
 .imageWrap:nth-child(3n + 2) {
   grid-row: span 2;

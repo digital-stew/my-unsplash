@@ -12,7 +12,7 @@ function DeletePhoto({ id }) {
     );
   if (showModal)
     return (
-      <div className={styles.modalOuter} onClick={() => setShowModal(false)}>
+      <div className={styles.modalOuter}>
         <div className={styles.modal}>
           <form action="">
             <h3>Are you sure?</h3>

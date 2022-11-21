@@ -12,7 +12,6 @@ export default async function RootLayout({
       <head />
       <body>
         <Header />
-
         {children}
         <footer>
           created by

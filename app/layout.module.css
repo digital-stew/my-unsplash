@@ -6,21 +6,6 @@
   margin: 0 5rem;
   height: 100px;
 }
-.header button {
-  margin-left: auto;
-  background: rgba(61, 180, 109, 1);
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  width: 137px;
-  height: 55px;
-  color: rgba(255, 255, 255, 1);
-  font-family: "Noto Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 19px;
-  color: #ffffff;
-}
 .inputWrap {
   position: relative;
 }

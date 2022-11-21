@@ -15,6 +15,7 @@
   color: #4f4f4f;
   padding: 1.5rem;
   transition: all 0.5 ease;
+  z-index: 100;
 }
 .modal form {
   display: flex;
@@ -28,7 +29,7 @@
   width: 1000vw;
   height: 10000vh;
   background-color: rgba(0, 0, 0, 0.3);
-  /* z-index: 99; */
+  z-index: 100;
 }
 .modal label:nth-child(2) {
   margin-bottom: 3rem;

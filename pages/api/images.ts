@@ -3,8 +3,6 @@ import formidable from "formidable";
 import fs from "fs";
 import { db } from "../../components/sqlite";
 import { v4 as uuid } from "uuid";
-import path from "path";
-// const bcrypt = require("bcrypt");
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 

@@ -4,7 +4,6 @@
   width: 100%;
   object-fit: cover;
   border-radius: 16px;
-  z-index: 0;
   transition: scale 1s ease;
 }
 .imageWrap {
@@ -14,7 +13,6 @@
   display: flex;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  z-index: 2;
   transition: all 1s linear;
 }
 .image:hover {

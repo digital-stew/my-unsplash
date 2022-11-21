@@ -3,13 +3,7 @@ import Image from "next/image";
 import styles from "../styles/imageCard.module.css";
 import DeletePhoto from "./DeletePhoto";
 import { dbImageType } from "../pages/api/images";
-function ImageCard({
-  uuid,
-  label,
-  fileName,
-  id,
-  password,
-}: Partial<dbImageType>) {
+function ImageCard({ uuid, label, id }: Partial<dbImageType>) {
   let showModal = false;
   function deleteCard() {}
   return (

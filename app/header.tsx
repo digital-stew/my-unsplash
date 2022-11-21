@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./layout.module.css";
@@ -40,7 +40,13 @@ function Header() {
           </form>
         </div>
 
-        <button onClick={() => setModalOpen(true)}>Add a photo</button>
+        <button
+          style={{ marginLeft: "auto" }}
+          type="button"
+          onClick={() => setModalOpen(true)}
+        >
+          Add a photo
+        </button>
       </header>
       {modalOpen && <UploadPhoto setModalOpen={setModalOpen} />}
     </>

@@ -1,7 +1,6 @@
 "use client";
-// import styles from "../styles/uploadPhoto.modal.module.css";
 import styles from "../styles/modal.module.css";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 interface ImageType {
@@ -31,12 +30,6 @@ function UploadPhoto({ setModalOpen }) {
       return showMsg("1 picture at a time please");
     }
     setImage(e.dataTransfer.files[0]);
-  }
-
-  async function getURL(): Promise<boolean> {
-    const res = fetch(uploadURL);
-
-    return true;
   }
 
   function shakeInput(input: string) {
@@ -105,6 +98,7 @@ function UploadPhoto({ setModalOpen }) {
       shakeInput("password2");
     }
   }
+
   async function upload() {
     setLoading(true);
     const formData = new FormData();
@@ -117,14 +111,8 @@ function UploadPhoto({ setModalOpen }) {
       cache: "no-cache",
       body: formData,
     });
-    console.log(res.status);
     if (res.status === 200) {
       const uuid = await res.json();
-      console.log(uuid);
-      // setDownloadLink(window.location.origin + "/api/image/" + uuid);
-
-      // setLoading(false);
-      // setFinished(true)
       setModalOpen(false);
     } else {
       const data = await res.json();
@@ -137,7 +125,7 @@ function UploadPhoto({ setModalOpen }) {
 
   if (step === 1 && !loading)
     return (
-      <div className={styles.modalOuter} onClick={() => setModalOpen(false)}>
+      <div className={styles.modalOuter}>
         <div
           className={styles.modal}
           onDrop={(e) => {
@@ -282,10 +270,8 @@ function UploadPhoto({ setModalOpen }) {
     return (
       <div className={styles.modalOuter}>
         <div className={styles.modal}>
-          {/* <div className={styles.wrapper}> */}
           <h2>Uploading...</h2>
           <div className={styles.progressBar}></div>
-          {/* </div> */}
         </div>
       </div>
     );
