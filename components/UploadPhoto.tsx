@@ -127,7 +127,7 @@ function UploadPhoto({ setModalOpen }) {
     return (
       <div className={styles.modalOuter}>
         <div
-          className={styles.modal}
+          className={styles.modal + " grow"}
           onDrop={(e) => {
             dropHandler(e);
           }}

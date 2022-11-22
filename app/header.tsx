@@ -6,6 +6,7 @@ import styles from "./layout.module.css";
 import logo from "../components/my_unsplash_logo.svg";
 import searchIcon from "../components/search.svg";
 import UploadPhoto from "../components/UploadPhoto";
+import Link from "next/link";
 
 function Header() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,7 +21,9 @@ function Header() {
   return (
     <>
       <header className={styles.header}>
-        <Image src={logo} alt="logo" width={200} height={150} />
+        <Link href={"/"}>
+          <Image src={logo} alt="logo" width={200} height={150} />
+        </Link>
         <div className={styles.inputWrap}>
           <form onSubmit={(e) => getSearch(e)}>
             <input

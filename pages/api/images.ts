@@ -100,4 +100,7 @@ function PATCH(req: NextApiRequest, res: NextApiResponse) {
     });
   });
 }
-function DELETE(_req: NextApiRequest, _res: NextApiResponse) {}
+function DELETE(req: NextApiRequest, res: NextApiResponse) {
+  console.log(req.body);
+  res.status(200).json(true);
+}

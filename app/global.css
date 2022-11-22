@@ -29,12 +29,18 @@ footer {
 
 button[type="submit"],
 button[type="button"] {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
   width: 105px;
   height: 55px;
   color: rgba(255, 255, 255, 1);
   background: #3db46d;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
+  margin: 0 0.5rem;
 }
 button[type="reset"] {
   width: 70px;
@@ -48,6 +54,17 @@ button[type="reset"] {
   border: none;
   border-radius: 10px;
   color: #bdbdbd;
+}
+.grow {
+  animation: 1s linear grow;
+}
+@keyframes grow {
+  0% {
+    scale: 0;
+  }
+  100% {
+    scale: 1;
+  }
 }
 .shake {
   animation: 0.5s linear shake;

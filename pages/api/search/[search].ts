@@ -33,4 +33,7 @@ export default function image(req: NextApiRequest, res: NextApiResponse) {
 }
 function POST(req: NextApiRequest, res: NextApiResponse) {}
 function PATCH(_req: NextApiRequest, _res: NextApiResponse) {}
-function DELETE(_req: NextApiRequest, _res: NextApiResponse) {}
+function DELETE(req: NextApiRequest, res: NextApiResponse) {
+  console.log(req.body);
+  res.status(200).json(true);
+}
