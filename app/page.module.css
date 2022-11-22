@@ -6,8 +6,8 @@
   gap: 20px;
   grid-auto-flow: row dense;
   margin: 5rem;
-  width: 100%;
-  /* margin: 0 auto; */
+  width: 90%;
+  margin: 0 auto;
 }
 
 .imageWrap:nth-child(4n) {
@@ -15,4 +15,14 @@
 }
 .imageWrap:nth-child(3n + 2) {
   grid-row: span 2;
+}
+@media (max-width: 1250px) {
+  .imageGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .imageGrid {
+    grid-template-columns: 1fr;
+  }
 }

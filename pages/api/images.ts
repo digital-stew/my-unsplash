@@ -64,10 +64,13 @@ async function saveFile(file: formidable.File, fileType: string) {
 }
 
 function GET(req: NextApiRequest, res: NextApiResponse) {
-  db.all("SELECT * from images", (err: Error, rows: dbImageType[]) => {
-    if (err) console.error(err);
-    res.status(200).json(rows);
-  });
+  db.all(
+    "SELECT * from images ORDER BY id DESC",
+    (err: Error, rows: dbImageType[]) => {
+      if (err) console.error(err);
+      res.status(200).json(rows);
+    }
+  );
 }
 
 export const config = {

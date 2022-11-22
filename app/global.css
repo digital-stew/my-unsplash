@@ -56,7 +56,7 @@ button[type="reset"] {
   color: #bdbdbd;
 }
 .grow {
-  animation: 1s linear grow;
+  animation: 300ms linear both grow;
 }
 @keyframes grow {
   0% {

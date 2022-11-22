@@ -1,7 +1,9 @@
 "use client";
 import styles from "../styles/modal.module.css";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Router from "next/router";
 
 interface ImageType {
   image: string;
@@ -17,6 +19,17 @@ function UploadPhoto({ setModalOpen }) {
   const [uploadURL, setUploadURL] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const password1Ref = useRef(null);
+  const password2Ref = useRef(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log("render");
+    console.log(step);
+    //auto focus not working. my workaround
+    if (step === 3) password2Ref.current.focus();
+    return () => {};
+  }, [step]);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -114,6 +127,7 @@ function UploadPhoto({ setModalOpen }) {
     if (res.status === 200) {
       const uuid = await res.json();
       setModalOpen(false);
+      router.refresh();
     } else {
       const data = await res.json();
       showMsg(data.error);
@@ -145,6 +159,7 @@ function UploadPhoto({ setModalOpen }) {
                 placeholder="Add a label"
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
+                autoFocus
               />
             </label>
             <label>
@@ -220,7 +235,10 @@ function UploadPhoto({ setModalOpen }) {
                 id="password1"
                 type="password"
                 value={password1}
+                // autoFocus={true}
+                ref={password1Ref}
                 onChange={(e) => setPassword1(e.target.value)}
+                autoFocus
               />
             </label>
             <div className={styles.buttonsWrap}>
@@ -248,6 +266,8 @@ function UploadPhoto({ setModalOpen }) {
                 id="password2"
                 type="password"
                 value={password2}
+                ref={password2Ref}
+                autoFocus
                 onChange={(e) => setPassword2(e.target.value)}
               />
             </label>
