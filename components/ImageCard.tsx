@@ -10,6 +10,7 @@ function ImageCard({ uuid, label, id }: Partial<dbImageType>) {
     <>
       <div className={styles.imageWrap}>
         <img
+          id={id.toString()}
           className={styles.image}
           src={"/uploaded/" + uuid}
           alt={label}

@@ -4,7 +4,7 @@ import fs from "fs";
 import { db } from "../../components/sqlite";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
-const saltRounds = 10;
+export const saltRounds = 10;
 
 export interface dbImageType {
   readonly id: number;
@@ -18,42 +18,54 @@ export interface UploadForm {
   label: string;
 }
 async function POST(req: NextApiRequest, res: NextApiResponse) {
-  // const delay = await new Promise((resolve) =>
-  //   setTimeout(() => resolve("some value"), 10000)
-  // );
+  try {
+    const form = new formidable.IncomingForm();
 
-  const form = new formidable.IncomingForm();
-  form.parse(req, async (_err: Error, fields: any, files: any) => {
-    const { password, label }: UploadForm = fields;
-    const fileType: string = files.image.originalFilename
-      .split(".")
-      .pop()
-      .toLowerCase();
+    form.parse(req, async (_err: Error, fields: any, files: any) => {
+      const { password, label }: UploadForm = fields;
+      const fileType: string = files.image.originalFilename
+        .split(".")
+        .pop()
+        .toLowerCase();
 
-    if (
-      fileType !== "png" &&
-      fileType !== "jpg" &&
-      fileType !== "jpeg" &&
-      fileType !== "blob" &&
-      fileType !== "gif"
-    ) {
-      return res.status(415).json({ error: "wrong file type" });
-    }
+      if (
+        fileType !== "png" &&
+        fileType !== "jpg" &&
+        fileType !== "jpeg" &&
+        fileType !== "blob" &&
+        fileType !== "gif"
+      ) {
+        return res.status(415).json({ error: "wrong file type" });
+      }
 
-    const randomId = await saveFile(files.image, fileType);
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-      // Store hash in your password DB.
+      const randomId = await saveFile(files.image, fileType);
+      const passwordHash = await new Promise((resolve, reject) => {
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+          if (err) reject(err);
+          resolve(hash);
+        });
+      });
 
-      db.run(
-        "INSERT INTO images (fileName, uuid, label, password) VALUES (?,?,?,?)",
-        [files.image.originalFilename, randomId, label, hash],
-        async (err) => {
-          if (err) return res.status(500).json({ error: err.message });
-          res.status(200).json(randomId);
-        }
-      );
+      const runSQL = await new Promise((resolve, reject) => {
+        db.run(
+          "INSERT INTO images (fileName, uuid, label, password) VALUES (?,?,?,?)",
+          [files.image.originalFilename, randomId, label, passwordHash],
+          (err) => {
+            if (err) reject(err);
+            resolve(true);
+          }
+        );
+      });
+
+      if (runSQL === true) {
+        res.status(200).json(randomId);
+      } else {
+        res.status(500).send(null);
+      }
     });
-  });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
 }
 async function saveFile(file: formidable.File, fileType: string) {
   const data = fs.readFileSync(file.filepath);
@@ -93,17 +105,5 @@ export default function image(req: NextApiRequest, res: NextApiResponse) {
     : res.status(404).send("");
 }
 
-function PATCH(req: NextApiRequest, res: NextApiResponse) {
-  // console.log(req.body);
-  const form = new formidable.IncomingForm();
-  form.parse(req, async (_err: Error, fields: any, files: any) => {
-    db.all("SELECT * from images", (err: Error, rows: dbImageType[]) => {
-      if (err) console.error(err);
-      res.status(200).json(rows);
-    });
-  });
-}
-function DELETE(req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.body);
-  res.status(200).json(true);
-}
+function PATCH(_req: NextApiRequest, _res: NextApiResponse) {}
+function DELETE(_req: NextApiRequest, _res: NextApiResponse) {}

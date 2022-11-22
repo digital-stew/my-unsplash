@@ -1,10 +1,12 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styles from "../styles/modal.module.css";
 
 function DeletePhoto({ id }) {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
+  const router = useRouter();
   async function handleDeleteCard(e: React.FormEvent, id: number) {
     e.preventDefault();
     const res = await fetch("http://localhost:3000/api/search/delete", {
@@ -13,8 +15,17 @@ function DeletePhoto({ id }) {
       body: JSON.stringify({ id, password }),
     });
     if (res.status === 200) {
-      alert(id + " deleted");
-      // const data = res.json()
+      setShowModal(false);
+      document.getElementById(id.toString()).classList.add("spinOff");
+      setTimeout(() => {
+        router.refresh();
+      }, 1000);
+      // router.refresh();
+      // alert(id + " deleted");
+    } else if (res.status === 401) {
+      alert("wrong password");
+    } else {
+      alert("something went wrong");
     }
   }
   if (!showModal)
@@ -39,6 +50,7 @@ function DeletePhoto({ id }) {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoFocus
               />
               <div className={styles.buttonsWrap}>
                 <button type="reset" onClick={() => setShowModal(false)}>

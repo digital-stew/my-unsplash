@@ -3,7 +3,6 @@ import styles from "../styles/modal.module.css";
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Router from "next/router";
 
 interface ImageType {
   image: string;
@@ -24,8 +23,6 @@ function UploadPhoto({ setModalOpen }) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("render");
-    console.log(step);
     //auto focus not working. my workaround
     if (step === 3) password2Ref.current.focus();
     return () => {};
@@ -77,7 +74,7 @@ function UploadPhoto({ setModalOpen }) {
         const res = await fetch(uploadURL, {
           cache: "no-store",
         });
-
+        console.log(res);
         if (res.headers.get("content-type").includes("image")) {
           const data = await res.blob();
           setImage(data);
@@ -160,6 +157,7 @@ function UploadPhoto({ setModalOpen }) {
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
                 autoFocus
+                autoComplete="off"
               />
             </label>
             <label>

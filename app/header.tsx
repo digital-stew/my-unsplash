@@ -17,6 +17,9 @@ function Header() {
     e?.preventDefault();
     router.push("/" + search);
   }
+  function myFunc() {
+    document.getElementById("2").classList.toggle("spinOff");
+  }
 
   return (
     <>
@@ -42,7 +45,7 @@ function Header() {
             />
           </form>
         </div>
-
+        <button onClick={() => myFunc()}>click</button>
         <button
           style={{ marginLeft: "auto" }}
           type="button"
