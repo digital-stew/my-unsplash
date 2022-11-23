@@ -4,27 +4,28 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-interface ImageType {
-  image: string;
-  setImage: React.SetStateAction<ImageType>;
-}
-function UploadPhoto({ setModalOpen }) {
+function UploadPhoto({
+  setModalOpen,
+}: {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [msg, setMsg] = useState("");
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<Blob>();
   const [label, setLabel] = useState("");
   const [uploadURL, setUploadURL] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
-  const password1Ref = useRef(null);
-  const password2Ref = useRef(null);
+  const password1Ref = useRef<HTMLInputElement>(null);
+  const password2Ref = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   useEffect(() => {
     //auto focus not working. my workaround
-    if (step === 3) password2Ref.current.focus();
+    if (step === 3 && password2Ref.current !== null)
+      password2Ref.current.focus();
     return () => {};
   }, [step]);
 
@@ -39,13 +40,15 @@ function UploadPhoto({ setModalOpen }) {
     if (e.dataTransfer.files.length > 1) {
       return showMsg("1 picture at a time please");
     }
-    setImage(e.dataTransfer.files[0]);
+    const image = e.dataTransfer.files[0];
+    setImage(image);
   }
 
   function shakeInput(input: string) {
-    document.getElementById(input).classList.add("shake");
+    const element = document.getElementById(input) as HTMLElement;
+    element.classList.add("shake");
     setTimeout(() => {
-      document.getElementById(input).classList.remove("shake");
+      element.classList.remove("shake");
     }, 2000);
   }
 
@@ -74,8 +77,9 @@ function UploadPhoto({ setModalOpen }) {
         const res = await fetch(uploadURL, {
           cache: "no-store",
         });
-        console.log(res);
-        if (res.headers.get("content-type").includes("image")) {
+
+        const headers = res.headers.get("content-type");
+        if (headers?.includes("image")) {
           const data = await res.blob();
           setImage(data);
         }
@@ -112,7 +116,7 @@ function UploadPhoto({ setModalOpen }) {
   async function upload() {
     setLoading(true);
     const formData = new FormData();
-    formData.append("image", image);
+    if (image) formData.append("image", image);
     formData.append("password", password1);
     formData.append("label", label);
 
@@ -128,7 +132,7 @@ function UploadPhoto({ setModalOpen }) {
     } else {
       const data = await res.json();
       showMsg(data.error);
-      setImage("");
+      setImage(undefined);
       setStep(1);
     }
     setLoading(false);
@@ -169,7 +173,7 @@ function UploadPhoto({ setModalOpen }) {
                 value={uploadURL}
                 onChange={(e) => {
                   setUploadURL(e.target.value);
-                  setImage("");
+                  setImage(undefined);
                 }}
               />
             </label>
@@ -179,7 +183,7 @@ function UploadPhoto({ setModalOpen }) {
               type="file"
               className={styles.fileInput}
               onChange={(e) => {
-                setImage(e.target.files[0]);
+                if (e.target.files) setImage(e.target.files[0]);
                 setUploadURL("");
               }}
               style={{ display: "none" }}
@@ -188,7 +192,10 @@ function UploadPhoto({ setModalOpen }) {
               <span>
                 <button
                   type="button"
-                  onClick={() => document.getElementById("fileInput").click()}
+                  onClick={() => {
+                    const element = document.getElementById("fileInput");
+                    element?.click();
+                  }}
                 >
                   Choose file
                 </button>
@@ -294,6 +301,7 @@ function UploadPhoto({ setModalOpen }) {
       </div>
     );
   }
+  return null;
 }
 
 export default UploadPhoto;

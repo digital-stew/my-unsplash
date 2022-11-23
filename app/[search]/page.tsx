@@ -4,13 +4,11 @@ import styles from "../page.module.css";
 import ImageCard from "../../components/ImageCard";
 
 async function getData(search: string) {
-  const res = await fetch(
-    process.env.SERVER_ADDRESS + "/api/search/" + search,
-    {
-      method: "GET",
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(process.env.SERVER_ADDRESS + "/api/images/", {
+    method: "GET",
+    cache: "no-store",
+    headers: { search: search },
+  });
   if (res.status === 200) {
     return await res.json();
   } else {
@@ -18,7 +16,7 @@ async function getData(search: string) {
   }
 }
 
-async function Page({ params }) {
+async function Page({ params }: { params: { search: string } }) {
   const images: dbImageType[] = await getData(params.search);
   return (
     <div className={styles.imageGrid}>

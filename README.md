@@ -1,6 +1,7 @@
     to do:
     mobile version
     image upload from link not working as intended ?cors?
+    broken upload image :(
     modal positioning
     typescript properly
 

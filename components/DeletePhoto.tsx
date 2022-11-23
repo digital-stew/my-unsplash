@@ -2,21 +2,28 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styles from "../styles/modal.module.css";
+import { dbImageType } from "../pages/api/images";
 
-function DeletePhoto({ id }) {
+function DeletePhoto({ id }: Partial<dbImageType>) {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
   const router = useRouter();
+
   async function handleDeleteCard(e: React.FormEvent, id: number) {
     e.preventDefault();
-    const res = await fetch("http://localhost:3000/api/search/delete", {
+    const uploadForm = new FormData();
+    uploadForm.append("id", id.toString());
+    uploadForm.append("password", password);
+    const res = await fetch("http://localhost:3000/api/images", {
       cache: "no-cache",
       method: "DELETE",
-      body: JSON.stringify({ id, password }),
+      // body: JSON.stringify({ id, password }),
+      body: uploadForm,
     });
     if (res.status === 200) {
       setShowModal(false);
-      document.getElementById(id.toString()).classList.add("spinOff");
+      const element = document.getElementById(id.toString());
+      element?.classList.add("spinOff");
       setTimeout(() => {
         router.refresh();
       }, 1000);
@@ -40,7 +47,7 @@ function DeletePhoto({ id }) {
         <div className={styles.modal + " grow"}>
           <form
             onSubmit={(e) => {
-              handleDeleteCard(e, id);
+              if (id) handleDeleteCard(e, id);
             }}
           >
             <h3>Are you sure?</h3>
@@ -63,6 +70,7 @@ function DeletePhoto({ id }) {
         </div>
       </div>
     );
+  return null;
 }
 
 export default DeletePhoto;

@@ -6,7 +6,7 @@
   gap: 20px;
   grid-auto-flow: row dense;
   margin: 5rem;
-  width: 90%;
+  width: 90vw;
   margin: 0 auto;
 }
 
@@ -15,6 +15,11 @@
 }
 .imageWrap:nth-child(3n + 2) {
   grid-row: span 2;
+}
+@media (max-width: 880px) {
+  /* .imageGrid {
+    margin-left: 100px;
+  } */
 }
 @media (max-width: 1250px) {
   .imageGrid {

@@ -1,25 +1,21 @@
+:root {
+  --main-bg-color: white;
+}
 body {
   margin: 0;
+  display: flex;
+  background-color: var(--main-bg-color);
+  flex-direction: column;
 }
 * {
   box-sizing: border-box;
 }
-header {
-  position: relative;
-  top: 0;
-  height: 5vh;
-  font-family: "Poppins";
-  font-style: normal;
-  display: flex;
-  justify-content: center;
-  gap: 4rem;
-  align-items: center;
-}
 
 footer {
   height: 5vh;
-  position: relative;
   bottom: 0;
+  left: 0;
+  right: 0;
   text-align: center;
   margin: 0 auto;
 }
@@ -37,7 +33,6 @@ button[type="button"] {
   background: #3db46d;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  margin: 0 0.5rem;
 }
 button[type="reset"] {
   width: 70px;
@@ -52,6 +47,7 @@ button[type="reset"] {
   border-radius: 10px;
   color: #bdbdbd;
 }
+
 .grow {
   animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;

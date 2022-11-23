@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import formidable from "formidable";
-import fs from "fs";
+import fs, { appendFile } from "fs";
 import { db } from "../../components/sqlite";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
@@ -17,6 +17,31 @@ export interface UploadForm {
   password: string;
   label: string;
 }
+
+function GET(req: NextApiRequest, res: NextApiResponse) {
+  //using header, cant parse body
+  if (req.headers["search"]) {
+    db.all(
+      "SELECT id,label,uuid from images WHERE label LIKE ?",
+      [`%${req.headers["search"]}%`],
+      (err: Error, rows: dbImageType[]) => {
+        if (err) console.error(err);
+        res.status(200).json(rows);
+      }
+    );
+  }
+
+  if (!req.headers["search"]) {
+    db.all(
+      "SELECT id,label,uuid from images ORDER BY id DESC",
+      (err: Error, rows: dbImageType[]) => {
+        if (err) console.error(err);
+        res.status(200).json(rows);
+      }
+    );
+  }
+}
+
 async function POST(req: NextApiRequest, res: NextApiResponse) {
   try {
     const form = new formidable.IncomingForm();
@@ -64,9 +89,10 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
       }
     });
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json(error);
   }
 }
+
 async function saveFile(file: formidable.File, fileType: string) {
   const data = fs.readFileSync(file.filepath);
   const random = uuid();
@@ -75,14 +101,51 @@ async function saveFile(file: formidable.File, fileType: string) {
   return `${random}.${fileType}`;
 }
 
-function GET(req: NextApiRequest, res: NextApiResponse) {
-  db.all(
-    "SELECT * from images ORDER BY id DESC",
-    (err: Error, rows: dbImageType[]) => {
-      if (err) console.error(err);
-      res.status(200).json(rows);
+async function DELETE(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const data: { id: string; password: string } = await new Promise(
+      (resolve, reject) => {
+        const form = new formidable.IncomingForm();
+        form.parse(req, async (err: Error, fields: any, files: any) => {
+          if (err) reject(err);
+          resolve(fields);
+        });
+      }
+    );
+    const { id, password } = data;
+
+    const selectedImage: dbImageType = await new Promise((resolve, reject) => {
+      db.get("SELECT * FROM images WHERE id=?", [id], (err, row) => {
+        if (err) reject(err);
+        resolve(row);
+      });
+    });
+
+    const isCorrectPassword = await new Promise((resolve, reject) => {
+      bcrypt.compare(password, selectedImage.password, (err, result) => {
+        if (err) reject(err);
+        if (result === true) resolve(true);
+        if (result === false) resolve(false);
+      });
+    });
+
+    if (isCorrectPassword === true) {
+      const deleteSuccessful = await new Promise((resolve, reject) => {
+        db.run("DELETE FROM images WHERE id=?", [id], (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(true);
+          }
+        });
+      });
+      res.status(200).json(true);
+    } else {
+      res.status(401).send(null);
     }
-  );
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
 
 export const config = {
@@ -93,17 +156,12 @@ export const config = {
   },
 };
 
-export default function image(req: NextApiRequest, res: NextApiResponse) {
+export default function images(req: NextApiRequest, res: NextApiResponse) {
   req.method === "POST"
     ? POST(req, res)
     : req.method === "PATCH"
-    ? PATCH(req, res)
-    : req.method === "DELETE"
     ? DELETE(req, res)
     : req.method === "GET"
     ? GET(req, res)
     : res.status(404).send("");
 }
-
-function PATCH(_req: NextApiRequest, _res: NextApiResponse) {}
-function DELETE(_req: NextApiRequest, _res: NextApiResponse) {}

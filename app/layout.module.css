@@ -5,7 +5,45 @@
   display: flex;
   margin: 0 5rem;
   height: 100px;
+  top: 0;
+  font-family: "Poppins";
+  font-style: normal;
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+  background-color: var(--main-bg-color);
+  transition: all 1s ease;
+  overflow: hidden;
 }
+.logoBurgerWrap {
+  display: flex;
+}
+
+/* burgerSVG */
+
+.burgerSVG[data-expanded="true"],
+.burgerSVG[data-expanded="true"] .line {
+  translate: 20px 5px;
+  rotate: 0.125turn;
+  stroke-dasharray: 60 105 60 300;
+  stroke-dashoffset: -90;
+}
+.expandNavButton {
+  all: unset;
+  --button-color: black;
+  display: none;
+}
+
+.expandNavButton .burgerSVG {
+  transition: translate 1s, rotate 1s;
+}
+
+.expandNavButton .line {
+  transition: 1s;
+  stroke-dasharray: 60 31 60 300;
+}
+/* burgerSVG */
+
 .inputWrap {
   position: relative;
 }
@@ -21,9 +59,7 @@
   border: 1px solid #bdbdbd;
   filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.1));
   border-radius: 12px;
-  width: 300px;
   height: 55px;
-
   font-family: "Noto Sans";
   font-style: normal;
   font-weight: 500;
@@ -31,4 +67,22 @@
   line-height: 19px;
   padding-left: 3rem;
   color: #bdbdbd;
+}
+.headerButton {
+  margin-left: auto;
+}
+@media (max-width: 880px) {
+  .header {
+    flex-direction: column;
+    /* z-index: 1000; */
+    height: 130px;
+    overflow: hidden;
+    margin: 0;
+  }
+  .headerButton {
+    margin: 0;
+  }
+  .expandNavButton {
+    display: block;
+  }
 }
