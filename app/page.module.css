@@ -16,11 +16,6 @@
 .imageWrap:nth-child(3n + 2) {
   grid-row: span 2;
 }
-@media (max-width: 880px) {
-  /* .imageGrid {
-    margin-left: 100px;
-  } */
-}
 @media (max-width: 1250px) {
   .imageGrid {
     grid-template-columns: repeat(2, 1fr);

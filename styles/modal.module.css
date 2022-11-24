@@ -1,9 +1,5 @@
 .modal {
   position: fixed;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  z-index: 100;
   width: 620px;
   background: #ffffff;
   border-radius: 12px;
@@ -14,20 +10,36 @@
   line-height: 19px;
   color: #4f4f4f;
   padding: 1.5rem;
-  /* transition: all 0.5 ease; */
   z-index: 100;
+}
+.dropHereText {
+  display: inline-block;
+}
+@media (max-width: 880px) {
+  .modal {
+    width: auto;
+    translate: 0 0;
+    left: 0;
+    right: 0;
+    top: 30px;
+  }
+  .dropHereText {
+    display: none;
+  }
 }
 .modal form {
   display: flex;
   flex-direction: column;
 }
 .modalOuter {
-  position: absolute;
-  top: -10000px;
-  left: -1000px;
-
-  width: 1000vw;
-  height: 10000vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 100;
 }
@@ -40,7 +52,7 @@
 }
 .modal p {
   padding: 0;
-  margin: 0;
+  margin: 0 1rem;
   text-align: center;
 }
 .modal h3 {
@@ -56,7 +68,6 @@
   padding: 0.5rem;
 }
 .modal input {
-  width: 552.33px;
   height: 55px;
   font-size: 14px;
   color: #817d7d;
@@ -69,9 +80,11 @@
   display: flex;
   align-items: center;
 }
+.buttonsWrap > * {
+  margin: 0 0.2rem;
+}
 .progressBar {
   position: relative;
-  /* width: 540px; */
   width: 80%;
   margin: 0 auto;
   border-radius: 8px;
@@ -96,7 +109,7 @@
   height: 6px;
   width: 100px;
   border-radius: 8px;
-  animation: 2s linear 1s infinite running load;
+  animation: 2s linear infinite running load;
 }
 @keyframes load {
   0% {

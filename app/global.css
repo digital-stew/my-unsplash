@@ -1,5 +1,6 @@
 :root {
   --main-bg-color: white;
+  --size-mobile: max-width:880px;
 }
 body {
   margin: 0;
@@ -49,7 +50,7 @@ button[type="reset"] {
 }
 
 .grow {
-  animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  animation: slide-in-elliptic-top-fwd 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
 }
 @keyframes slide-in-elliptic-top-fwd {

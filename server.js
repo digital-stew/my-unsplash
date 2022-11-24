@@ -1,9 +1,9 @@
-
 const { createServer } = require("https");
 const { parse } = require("url");
 const next = require("next");
 const fs = require("fs");
-const port = 443;
+const port = 3000;
+console.log(process.env.SERVER_PORT)
 const app = next({ dev: false });
 const handle = app.getRequestHandler();
 
@@ -18,6 +18,8 @@ app.prepare().then(() => {
         handle(req, res, parsedUrl);
     }).listen(port, (err) => {
         if (err) throw err;
+        console.log(process.env.SERVER_PORT)
+
         console.log("ready - started server on port: " + port);
     });
 });

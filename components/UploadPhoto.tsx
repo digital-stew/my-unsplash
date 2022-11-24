@@ -199,7 +199,7 @@ function UploadPhoto({
                 >
                   Choose file
                 </button>
-                or drop here
+                <p className={styles.dropHereText}> or drop here</p>
               </span>
               <button
                 style={{ marginLeft: "auto" }}
