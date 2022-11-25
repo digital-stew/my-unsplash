@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import ImageCard from "../components/ImageCard";
 
 async function getData() {
-  const res = await fetch(process.env.SERVER_ADDRESS + "/api/images/", {
+  const res = await fetch("http://127.0.0.1:10006/api/images/", {
     cache: "no-store",
   });
   return await res.json();

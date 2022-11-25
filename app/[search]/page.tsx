@@ -4,7 +4,7 @@ import styles from "../page.module.css";
 import ImageCard from "../../components/ImageCard";
 
 async function getData(search: string) {
-  const res = await fetch(process.env.SERVER_ADDRESS + "/api/images/", {
+  const res = await fetch("http://127.0.0.1:10006/api/images/", {
     method: "GET",
     cache: "no-store",
     headers: { search: search },
