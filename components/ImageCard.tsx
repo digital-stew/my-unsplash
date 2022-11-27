@@ -3,9 +3,8 @@ import Image from "next/image";
 import styles from "../styles/imageCard.module.css";
 import DeletePhoto from "./DeletePhoto";
 import { dbImageType } from "../pages/api/images";
-import { resolveObjectURL } from "buffer";
 
-async function ImageCard({ uuid, label, id }: Partial<dbImageType>) {
+function ImageCard({ uuid, label, id }: Partial<dbImageType>) {
   return (
     <>
       <div className={styles.imageWrap}>
