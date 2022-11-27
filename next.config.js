@@ -5,7 +5,7 @@ const nextConfig = {
   /** basePath: "/test",*/
   assetPrefix: "/my-unsplash/",
   images: {
-    domains: ['127.0.0.1'],
+    domains: ['127.0.0.1', 'tux-systems.co.uk'],
   },
 
 }

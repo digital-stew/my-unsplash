@@ -96,7 +96,7 @@ async function POST(req: NextApiRequest, res: NextApiResponse) {
 async function saveFile(file: formidable.File, fileType: string) {
   const data = fs.readFileSync(file.filepath);
   const random = uuid();
-  fs.writeFileSync(`./public/uploaded/${random}.${fileType}`, data);
+  fs.writeFileSync(`/var/www/html/uploads/${random}.${fileType}`, data);
   fs.unlinkSync(file.filepath);
   return `${random}.${fileType}`;
 }

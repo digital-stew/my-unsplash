@@ -16,7 +16,7 @@ function Header() {
 
   function getSearch(e?: React.FormEvent) {
     e?.preventDefault();
-    router.push("/" + search);
+    router.push("/my-unsplash/" + search);
   }
 
   function openNav() {
