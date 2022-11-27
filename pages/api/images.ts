@@ -159,9 +159,9 @@ export const config = {
 export default function images(req: NextApiRequest, res: NextApiResponse) {
   req.method === "POST"
     ? POST(req, res)
-    : req.method === "PATCH"
-    ? DELETE(req, res)
-    : req.method === "GET"
-    ? GET(req, res)
-    : res.status(404).send("");
+    : req.method === "DELETE"
+      ? DELETE(req, res)
+      : req.method === "GET"
+        ? GET(req, res)
+        : res.status(404).send("");
 }

@@ -7,12 +7,12 @@ function ImageCard({ uuid, label, id }: Partial<dbImageType>) {
   return (
     <>
       <div className={styles.imageWrap}>
-        <Image
+        <img
           id={id?.toString()}
           className={styles.image}
-          src={"/uploaded/" + uuid}
+          src={"/my-unsplash/uploaded/" + uuid}
           style={{ objectFit: "cover" }}
-          fill
+          // fill
           alt={label ? label : "undefined"}
         />
         <p>{label}</p>

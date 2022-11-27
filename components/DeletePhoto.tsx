@@ -14,7 +14,7 @@ function DeletePhoto({ id }: Partial<dbImageType>) {
     const uploadForm = new FormData();
     uploadForm.append("id", id.toString());
     uploadForm.append("password", password);
-    const res = await fetch("http://localhost:3000/api/images", {
+    const res = await fetch("/my-unsplash/api/images", {
       cache: "no-cache",
       method: "DELETE",
       // body: JSON.stringify({ id, password }),

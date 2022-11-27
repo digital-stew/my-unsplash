@@ -2,7 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: { appDir: true },
-  basePath: ""
+  /** basePath: "/test",*/
+  assetPrefix: "/my-unsplash/",
+  images: {
+    domains: ['127.0.0.1'],
+  },
+
 }
 
 module.exports = nextConfig
+

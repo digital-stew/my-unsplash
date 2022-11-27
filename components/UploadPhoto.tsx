@@ -120,7 +120,7 @@ function UploadPhoto({
     formData.append("password", password1);
     formData.append("label", label);
 
-    const res = await fetch("/api/images", {
+    const res = await fetch("/my-unsplash/api/images", {
       method: "POST",
       cache: "no-cache",
       body: formData,
@@ -212,7 +212,7 @@ function UploadPhoto({
             </div>
 
             <p>{msg}</p>
-            {image && <p>{image.name}</p>}
+            {image && <p>{image.type}</p>}
 
             {image && (
               <Image
