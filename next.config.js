@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: { appDir: true },
   /** basePath: "/test",*/
-  assetPrefix: "/my-unsplash/",
+  /**   assetPrefix: "/my-unsplash/", */
   images: {
     domains: ['127.0.0.1', 'tux-systems.co.uk'],
   },

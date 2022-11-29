@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import styles from "./layout.module.css";
+// import styles from "./layout.module.css";
 import logo from "../components/my_unsplash_logo.svg";
 import searchIcon from "../components/search.svg";
 import UploadPhoto from "../components/UploadPhoto";
@@ -31,19 +31,17 @@ function Header() {
 
   return (
     <>
-      <header className={styles.header}>
-        <div className={styles.logoBurgerWrap}>
-          <button className={styles.expandNavButton} onClick={() => openNav()}>
+      <header className="flex justify-around items-center h-16">
+        <div>
+          <button className="md:hidden" onClick={() => openNav()}>
             <svg
               data-expanded={navOpen ? "true" : "false"}
               stroke="black"
               fill="none"
-              className={styles.burgerSVG}
               viewBox="-10 -10 120 120"
               width="50"
             >
               <path
-                className={styles.line}
                 strokeWidth="10"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -51,20 +49,21 @@ function Header() {
               ></path>
             </svg>
           </button>
-          <Link href={"/"}>
+          <Link href={"/"} className="">
             <Image src={logo} alt="logo" width={200} height={150} />
           </Link>
         </div>
-        <div className={styles.inputWrap}>
+        <div className="relative">
           <form onSubmit={(e) => getSearch(e)}>
             <input
+              className=" border-slate-600 h-12 pl-14 border-spacing-20 border shadow-lg rounded-lg"
               type="text"
               placeholder="Search by name"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
             <Image
-              className={styles.searchBtn}
+              className=" absolute top-0"
               src={searchIcon}
               alt="search"
               width={50}
@@ -74,8 +73,8 @@ function Header() {
           </form>
         </div>
         <button
+          className=" btn-primary"
           id="headerButton"
-          className={styles.headerButton}
           type="button"
           onClick={() => setModalOpen(true)}
         >

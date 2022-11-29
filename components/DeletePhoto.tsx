@@ -37,7 +37,10 @@ function DeletePhoto({ id }: Partial<dbImageType>) {
   }
   if (!showModal)
     return (
-      <button style={{ zIndex: "100" }} onClick={() => setShowModal(true)}>
+      <button
+        className="z-10 top-3 right-3 border rounded-full px-2 text-red-700 opacity-0 group-hover:opacity-100 transition-opacity border-red-700 absolute"
+        onClick={() => setShowModal(true)}
+      >
         delete
       </button>
     );
